@@ -14,3 +14,9 @@ def main():
     user_df = dbEX.read_rds_table(dbCON, 'legacy_users')
     clean_user_df = dbCLEAN.clean_user_data(user_df)
     dbCON.upload_to_db(clean_user_df, 'dim_users')
+    
+# This is reading the card_details.pdf file from the s3 bucket, cleaning the data and uploading it to
+# the dim_card_details table.
+    card_df = dbEX.retrieve_pdf_data('https://data-handling-public.s3.eu-west-1.amazonaws.com/card_details.pdf')
+    clean_card_df = dbCLEAN.clean_card_data(card_df)
+    dbCON.upload_to_db(clean_card_df, 'dim_card_details')

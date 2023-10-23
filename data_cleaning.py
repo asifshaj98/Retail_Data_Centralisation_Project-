@@ -1,10 +1,38 @@
+import re
+import pandas as pd
+import numpy as np
 class DataCleaning:
     def clean_user_data(self, user_df):
         
-        '''
-        You will need clean the user data, look out for NULL values, errors with dates, incorrectly typed values and rows filled with the wrong information.
-
-        '''
-        return user_df        
     
+        return user_df
+    
+    def clean_card_data(self, card_df):
+        '''
+         Cleans a DataFrame containing credit card data by performing the following steps:
+    
+        1. Replaces null values with 'Unknown'.
+        2. Drops rows with null values.
+        3. Removes leading question marks from card numbers.
+        4. Removes non-numeric characters from card numbers.
+        5. Converts the date column to a datetime object.
+        6. Converts the card number column to an integer.
+        7. Converts the card provider column to a category.
+        '''
+        user_df = self.replace_and_drop_null(user_df)
+        user_df = self.drop_rows_containing_mask(user_df, "first_name", "\d+")
+        user_df['date_of_birth'] = pd.to_datetime(user_df['date_of_birth'])
+        user_df['email_address'] = user_df['email_address'].str.replace('@@', '@')
+        user_df['country_code'] = user_df['country_code'].str.replace('GG', 'G')
+        user_df['country_code'] = user_df['country_code'].astype('category')
+        replacements = {'\(0\)': '', '[\)\(\.\- ]' : '', '^\+': '00'}
+        user_df['phone_number'] = user_df['phone_number'].replace(replacements, regex=True)
+        user_df = self.drop_rows_containing_mask(user_df, "phone_number", "[a-zA-Z]")
+        user_df['join_date'] = pd.to_datetime(user_df['join_date'])
+        user_df['phone_number'] = user_df['phone_number'].str.replace('^00\d{2}', '', regex=True)
+        code_dict = {'GB': '0044', 'US': '001', 'DE': '0049'}
+        user_df['phone_number'] = user_df['phone_number'].apply(lambda x: code_dict.get(user_df.loc[user_df['phone_number']==x, 'country_code'].values[0], '') + x)
+        user_df = user_df.reset_index(drop=True)
+        return user_df 
+
     pass
