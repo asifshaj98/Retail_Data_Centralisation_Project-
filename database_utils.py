@@ -1,15 +1,21 @@
 import yaml
+import sqlalchemy 
 from sqlalchemy import create_engine
 from sqlalchemy import inspect
+from data_extraction import DataExtractor
+from data_cleaning import DataCleaning
+
+
 
 class DatabaseConnector:
     def read_db_credentials(self, file):
-        with open(file,'r') as file:
+        with open(file, 'r') as file:
             creds_dict = yaml.safe_load(file)
+        
         return creds_dict
     
     def init_db_engine(self):
-        creds_dict = self.read_db_credentials('db_creds.yaml')
+        creds_dict = self.read_db_credentials('db_creds.yml')
         database_type = 'postgresql'
         dbapi = 'psycopg2'
         host = creds_dict['RDS_HOST']
@@ -29,7 +35,7 @@ class DatabaseConnector:
         return inspector.get_table_names()
     
     def upload_to_db(self, df, table_name):
-        creds_dict = self.read_db_credentials('local_db_creds.yaml')
+        creds_dict = self.read_db_credentials('local_db_creds.yml')
         database_type = 'postgresql'
         dbapi = 'psycopg2'
         host = creds_dict['HOST']
@@ -39,5 +45,5 @@ class DatabaseConnector:
         port = 5432
         engine = create_engine(f'{database_type}+{dbapi}://{user}:{password}@{host}:{port}/{database}')
         engine.connect()
-        df.to_sql(name=table_name, con=engine, if_exists='replace')   
-        
+        df.to_sql(name=table_name, con=engine, if_exists='replace')
+  
