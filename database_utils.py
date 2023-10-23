@@ -29,18 +29,6 @@ class DatabaseConnector:
         return inspector.get_table_names()
     
     def upload_to_db(self, df, table_name):
-        
-        '''This function takes a dataframe and a table name as arguments, reads the database credentials from a
-        yaml file, creates an engine, and uploads the dataframe to the database.
-        
-        Parameters
-        ----------
-        df
-            the dataframe you want to upload
-        table_name
-            the name of the table you want to create in the database
-        '''
-        
         creds_dict = self.read_db_credentials('local_db_creds.yaml')
         database_type = 'postgresql'
         dbapi = 'psycopg2'
@@ -53,4 +41,3 @@ class DatabaseConnector:
         engine.connect()
         df.to_sql(name=table_name, con=engine, if_exists='replace')   
         
-    pass
