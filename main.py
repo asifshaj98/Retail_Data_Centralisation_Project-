@@ -26,3 +26,9 @@ def main():
     store_df = dbEX.retrieve_stores_data('https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores', 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details', api_creds)
     clean_store_df = dbCLEAN.clean_store_data(store_df)
     dbCON.upload_to_db(clean_store_df, 'dim_store_details')   
+    
+    # This is reading the products.csv file from the s3 bucket, cleaning the data and uploading it to
+# the dim_products table.
+    product_df = dbEX.extract_from_s3('s3://data-handling-public/products.csv')
+    clean_product_df = dbCLEAN.clean_products_data(product_df)
+    dbCON.upload_to_db(clean_product_df, 'dim_products')

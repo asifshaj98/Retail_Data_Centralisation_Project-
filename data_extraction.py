@@ -1,6 +1,8 @@
 import pandas as pd
 import tabula
 import requests
+import boto3
+import re
 class DataExtractor:
     
     def read_rds_table(self, db_connector, table_name):
@@ -44,4 +46,47 @@ class DataExtractor:
         df = pd.concat(dfs, ignore_index=True)
         
         return df
+    def extract_from_s3(self, address):
+        client = boto3.client('s3')
+        df = pd.read_csv(address)
+        
+        return df
+    
+    def convert_product_weights(weight):
+        weight = str(weight)
+
+        # Regular expressions to match different units and remove unwanted characters
+        unit_conversions = {
+            r'kg\b': 1,      # Kilograms
+            r'x': '*',       # Conversion for 'x' used as a separator
+            r'ml\b': 1/1000, # Milliliters to kilograms
+            r'g\b': 1/1000,  # Grams to kilograms
+            r'oz\b': 0.0283495  # Ounces to kilograms
+        }
+
+        for pattern, conversion in unit_conversions.items():
+            if re.search(pattern, weight):
+                weight = re.sub(rf'[\s,\'{pattern}]', "", weight)
+                return float(eval(weight) if '*' in pattern else weight) * conversion
+
+        # If no match is found, return the original weight as a string
+        return weight
+    
+    def clean_products_data(self, product_df):
+        product_df = self.replace_and_drop_null(product_df)
+        product_df = self.drop_rows_containing_mask(product_df, "product_price", "[a-zA-Z]")
+        product_df = product_df[product_df['EAN'].str.len() <= 13]
+        product_df['date_added'] = pd.to_datetime(product_df['date_added'])
+        product_df['weight'] = product_df['weight'].apply(self.convert_product_weights)
+        product_df['weight'] = product_df['weight'].astype('float')
+        product_df['product_price'] = product_df['product_price'].str.replace('£', '')
+        product_df['product_price'] = product_df['product_price'].astype('float')
+        product_df['category'] = product_df['category'].astype('category')
+        product_df['removed'] = product_df['removed'].astype('category')
+        product_df.rename(columns={'weight': 'weight_kg', 'product_price': 'price_£'}, inplace=True)
+        product_df.drop('Unnamed: 0', axis=1, inplace=True)
+        product_df = product_df.reset_index(drop=True)
+        
+        return product_df
+    
     pass
