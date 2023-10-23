@@ -34,5 +34,22 @@ class DataCleaning:
         user_df['phone_number'] = user_df['phone_number'].apply(lambda x: code_dict.get(user_df.loc[user_df['phone_number']==x, 'country_code'].values[0], '') + x)
         user_df = user_df.reset_index(drop=True)
         return user_df 
+    
+    def clean_store_data(self, store_df):
+        store_df.drop('lat', axis=1, inplace=True)
+        store_df = self.replace_and_drop_null(store_df)
+        store_df = self.drop_rows_containing_mask(store_df, "staff_numbers", "[a-zA-Z]")
+        store_df['continent'] = store_df['continent'].str.replace('ee', '')
+        store_df['opening_date'] = pd.to_datetime(store_df['opening_date'])
+        column_to_move = store_df.pop('latitude')
+        store_df.insert(2, 'latitude', column_to_move)
+        store_df['longitude'] = store_df['longitude'].astype('float')
+        store_df['latitude'] = store_df['latitude'].astype('float')
+        store_df['staff_numbers'] = store_df['staff_numbers'].astype('int')
+        store_df['store_type'] = store_df['store_type'].astype('category')
+        store_df['country_code'] = store_df['country_code'].astype('category')
+        store_df = store_df.reset_index(drop=True)
+        
+        return store_df
 
     pass

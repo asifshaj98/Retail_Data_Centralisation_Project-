@@ -20,3 +20,9 @@ def main():
     card_df = dbEX.retrieve_pdf_data('https://data-handling-public.s3.eu-west-1.amazonaws.com/card_details.pdf')
     clean_card_df = dbCLEAN.clean_card_data(card_df)
     dbCON.upload_to_db(clean_card_df, 'dim_card_details')
+    
+# This is getting the data from the api, cleaning the data and uploading it to the dim_store_details table.
+    api_creds = dbCON.read_db_credentials('api_creds.yaml')
+    store_df = dbEX.retrieve_stores_data('https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores', 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details', api_creds)
+    clean_store_df = dbCLEAN.clean_store_data(store_df)
+    dbCON.upload_to_db(clean_store_df, 'dim_store_details')   
