@@ -1,4 +1,0 @@
-HOST: localhost
-USER: postgres
-PASSWORD: postgres
-DATABASE: sales_data
