@@ -46,20 +46,30 @@ To run this project locally, you'll need to follow these steps:
 ## Getting Started
 
 To get started with this project, follow these steps:
+1. **Before running the project, make sure you   have the following prerequisites installed:**    
 
-1. **Clone the Repository**: Clone this repository to your local machine.
+   - [Python](https://www.python.org/): This project is written in Python. You can download and install Python from the official website.
+
+   - [AWS Account](https://aws.amazon.com/): Some data sources, such as S3 storage, may require AWS access. You'll need an AWS account and the necessary permissions to retrieve data from AWS.
+
+   - [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/): The AWS CLI is a command-line tool to interact with AWS services. You need to install and configure it to access AWS resources. 
+
+   - [PgAdmin4](https://www.pgadmin.org/): PgAdmin4 is used to manage PostgreSQL databases. Make sure you have PgAdmin4 installed and configured to work with PostgreSQL databases.
+
+
+2. **Clone the Repository**: Clone this repository to your local machine.
 
    ```bash
    git clone https://github.com/asifshaj98/multinational-retail-data-centralisation.git
 
-2. **Set up a Python environment and install the required packages:**
+3. **Set up a Python environment and install the required packages:**
 ```python
    pip install -r requirements.txt
 ```
 
-3. **Ensure you have the necessary AWS CLI and database credentials if applicable.**
+4. **Ensure you have the necessary AWS CLI and database credentials if applicable.**
 
-4. **Run the Python file:**
+5. **Run the Python file:**
 ```python
    python main.py
 ```

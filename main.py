@@ -54,5 +54,6 @@ def main():
         dbCON.upload_to_db(clean_date_times_df, 'dim_date_times')
     except:
         print("Error with extracting from JSON")
+if __name__ == "__main__":
+    main()
 
-main()
