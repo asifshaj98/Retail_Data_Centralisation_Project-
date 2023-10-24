@@ -18,6 +18,8 @@ class DataCleaning:
     def clean_user_data(self, user_df):
         user_df = self.replace_and_drop_null(user_df)
         user_df = user_df.reset_index(drop=True)
+        user_df['date_of_birth'] = pd.to_datetime(user_df['date_of_birth'], errors='coerce')
+        user_df.dropna(subset=['date_of_birth'], inplace=True)
         return user_df
     
     def clean_card_data(self, card_df):
@@ -28,6 +30,8 @@ class DataCleaning:
     def clean_store_data(self, store_df):
         store_df.drop('lat', axis=1, inplace=True)
         store_df = self.replace_and_drop_null(store_df)
+        store_df['opening_date'] = pd.to_datetime(store_df['opening_date'], errors='coerce')
+        store_df.dropna(subset=['opening_date'], inplace=True)
         return store_df
     
     def convert_product_weights(self, weight):
@@ -60,6 +64,9 @@ class DataCleaning:
     def clean_orders_data(self, order_df):
         order_df.drop(['first_name', 'last_name', '1'], axis=1, inplace=True)
         return order_df           
-def clean_date_times_data(self, date_times_df):
-        date_times_df = self.replace_and_drop_null(date_times_df)        
-        return date_times_df            
+    def clean_date_times_data(self, date_times_df):
+            date_times_df = self.replace_and_drop_null(date_times_df)
+            # Assuming you have a DataFrame called dim_date_times
+            valid_time_periods = ['Late_Hours', 'Morning', 'Midday', 'Evening']
+            date_times_df = date_times_df[date_times_df['time_period'].isin(valid_time_periods)]
+            return date_times_df            

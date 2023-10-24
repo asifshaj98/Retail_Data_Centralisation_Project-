@@ -12,7 +12,6 @@ class DataExtractor:
     
     def retrieve_pdf_data(self, link):
         df = pd.concat(tabula.read_pdf(link, pages='all'), ignore_index=True)
-        
         return df
     
     def list_number_of_stores(self, num_stores_endpoint, header_dict):
@@ -54,11 +53,9 @@ class DataExtractor:
     
     
     def extract_json_data(self, link):
-        
         response = requests.get(link)
         data = response.json()
         df = pd.DataFrame.from_dict(data)
         
         return df
-    
     
