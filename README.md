@@ -1,8 +1,40 @@
 # Sales Data Centralization Project
 
-## Project Overview
+## Table of Contents
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [File Structure](#file-structure)
+- [License](#license)
 
-Welcome to the Sales Data Centralization Project! This project addresses the challenges faced by a multinational company that sells various goods globally. Currently, their sales data is distributed across multiple data sources, making it challenging to access and analyze. To become more data-driven, the organization aims to centralize its sales data.
+## Description
+
+Welcome to my Data Engineering project! This project is designed to showcase various data handling and transformation techniques that are essential for data engineers. As a data engineer, the aim is to create a seamless data pipeline, ensuring that data is collected, processed, and stored efficiently.
+
+### What This Project Does
+This project covers various aspects of data engineering, including:
+- Data extraction from different sources (databases, APIs, S3 storage)
+- Data cleaning and preprocessing
+- Data transformation and conversion
+- Data loading into databases
+
+The project also provides real-world examples and demonstrates how to address common data quality and formatting issues. You will find detailed code examples and explanations for each stage of the data engineering process.
+
+### What I Learned
+Throughout this project, I learned and implemented the following key data engineering concepts:
+- Connecting to databases and APIs
+- Data extraction using libraries like `pandas`, `tabula`, and `requests`
+- Data cleaning with focus on handling missing values, formatting issues, and regular expressions
+- Data transformation for consistent data formats and structures
+- Uploading data to databases
+
+## Installation
+
+To run this project locally, you'll need to follow these steps:
+
+1. Clone the repository to your local machine:
+   ```shell
+   git clone https://github.com/your-username/your-data-engineering-project.git
 
 ## Objectives
 
@@ -19,3 +51,67 @@ To get started with this project, follow these steps:
 
    ```bash
    git clone https://github.com/asifshaj98/multinational-retail-data-centralisation.git
+
+2. **Set up a Python environment and install the required packages:**
+```python
+   pip install -r requirements.txt
+```
+
+3. **Ensure you have the necessary AWS CLI and database credentials if applicable.**
+
+4. **Run the Python file:**
+```python
+   python main.py
+```
+
+## Usage
+This project is designed for data engineers to learn and practice data handling and engineering techniques. You can follow the code and examples provided in the codebase to understand how data can be extracted, cleaned, transformed, and loaded into databases.
+
+You may use the codebase as a reference for similar data engineering tasks you encounter in your own projects.
+
+
+## File Structure
+The project structure is organized as follows:
+```bash
+data_engineering_project/
+│
+├── database_utils.py
+│
+├── data_extraction.py
+│
+├── data_cleaning.py
+│
+├── main.py
+│
+├── requirements.txt
+│
+├── README.md
+│
+├── db_creds.yaml
+│
+├── local_db_creds.yaml
+│
+└── api_creds.yaml
+```
+## File Functionality 
+
+- **database_utils.py**: Contains functions for database connection, credentials, and data uploading.
+
+- **data_extraction.py**: Includes data extraction methods for reading from databases, APIs, and S3 storage.
+
+- **data_cleaning.py**: Provides data cleaning and transformation functions to prepare data for analysis or loading into databases.
+
+- **main.py**: The main project file that orchestrates the entire data engineering pipeline.
+
+- **requirements.txt**: Lists the required Python packages for the project.
+
+- **README.md**: You're currently reading the project's README file.
+
+- **db_creds.yaml**: Configuration file with database connection details.
+
+- **local_db_creds.yaml**: Configuration file with local database credentials.
+
+- **api_creds.yaml**: Configuration file with API credentials.
+
+This structure helps to keep the project organized and maintainable. You can find detailed information about each file in the relevant sections of this README file.
+
