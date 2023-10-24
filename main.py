@@ -37,12 +37,5 @@ def main():
     order_df = dbEX.read_rds_table(dbCON, 'orders_table')
     clean_order_df = dbCLEAN.clean_orders_data(order_df)
     dbCON.upload_to_db(clean_order_df, 'orders_table')
-    
-# This is reading the date_details.json file from the s3 bucket, cleaning the data and uploading it to
-# the dim_date_times table.
-    date_times_df = dbEX.extract_json_data('https://data-handling-public.s3.eu-west-1.amazonaws.com/date_details.json')
-    clean_date_times_df = dbCLEAN.clean_date_times_data(date_times_df)
-    dbCON.upload_to_db(clean_date_times_df, 'dim_date_times')
-    
 
 main()

@@ -62,4 +62,3 @@ class DataExtractor:
         return df
     
     
-    pass
