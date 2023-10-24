@@ -97,4 +97,4 @@ class DataCleaning:
         date_times_df = self.replace_and_drop_null(date_times_df)
         date_times_df = self.drop_rows_containing_mask(date_times_df, "month", "[a-zA-Z]")  
         
-        return date_times_df            
+        return date_times_df           
